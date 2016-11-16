@@ -19,6 +19,12 @@ defmodule ShoppingSite.Router do
     get "/", PageController, :index
   end
 
+  scope "/admin", ShoppingSite.Admin, as: :admin do
+    pipe_through :browser
+
+    resources "/products", ProductController
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", ShoppingSite do
   #   pipe_through :api
