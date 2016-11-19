@@ -28,4 +28,25 @@ defmodule ShoppingSite.Admin.ProductController do
         render(conn, "new.html", changeset: changeset)
     end
   end
+
+  def edit(conn, %{"id" => id}) do
+    product = Repo.get!(Product, id)
+    changeset = Product.changset(product)
+    render conn, "edit.html", product: product, changeset: changeset
+  end
+
+  def update(conn, %{"id" => id, "product" => product_params}) do
+    product = Repo.get!(Product, id)
+    changeset = Product.changeset(product, product_params)
+
+    case Repo.update(changeset) do
+      {:ok, _product} ->
+        conn
+        |> put_flash(:info, "Update product successfully.")
+        |> redirect(to: admin_product_path(conn, :index))
+      {:error, changeset} ->
+        render(conn, "edit.html", product: product, changeset: changeset)
+    end
+  end
+
 end

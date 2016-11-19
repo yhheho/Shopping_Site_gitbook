@@ -6,6 +6,7 @@ defmodule ShoppingSite.User do
     field :password, :string, virtual: true
     field :encrypted_password, :string
     field :email, :string
+    field :admin, :boolean, default: false
 
     timestamps()
   end
