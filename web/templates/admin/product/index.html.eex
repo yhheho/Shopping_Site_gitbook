@@ -1,5 +1,16 @@
+<h1>Products</h1>
+
 <ul>
   <%= for product <- @products do %>
-    <li><%= link product.title , to: admin_product_path(@conn, :show, product.id) %></li>
+    <div class="col-xs-6 col-md-3">
+      <%= if product.photo.file_name != "" do %>
+        <img class="thumbnail"
+             src="<%= ShoppingSite.PhotoUploader.url({product.photo, product}, :thumb) %>"/>
+      <% else %>
+        <img class="thumbnail" src="http://placehold.it/200x200&text=No Pic"/>
+      <% end %>
+      <%= link product.title ,
+          to: admin_product_path(@conn, :show, product.id) %>  $<%= product.price %>
+    </div>
   <% end %>
 </ul>
