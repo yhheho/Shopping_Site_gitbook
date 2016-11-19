@@ -23,7 +23,7 @@ defmodule ShoppingSite.UserController do
     end
   end
 
-  defp authenticate(conn, _params) do
+  def authenticate(conn, _params) do
     if conn.assigns.current_user do
       conn
     else

@@ -3,6 +3,9 @@ defmodule ShoppingSite.Admin.ProductController do
 
   alias ShoppingSite.Product
 
+  import ShoppingSite.UserController, only: [authenticate: 2]
+  plug :authenticate
+
   def index(conn, _params) do
     products = Repo.all(Product)
     render conn, "index.html", products: products
