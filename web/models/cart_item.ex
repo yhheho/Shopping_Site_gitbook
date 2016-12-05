@@ -13,7 +13,7 @@ defmodule ShoppingSite.CartItem do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [])
-    |> validate_required([])
+    |> cast(params, [:cart_id, :product_id])
+    |> validate_required([:cart_id, :product_id])
   end
 end

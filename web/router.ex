@@ -21,6 +21,9 @@ defmodule ShoppingSite.Router do
     get "/", PageController, :index
     resources "/users", UserController, only: [:new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+    resources "/products", ProductController, only: [:show, :index] do
+      get "/add_to_cart", ProductController, :add_to_cart, as: :add_to_cart
+    end
   end
 
   scope "/admin", ShoppingSite.Admin, as: :admin do
