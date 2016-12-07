@@ -1,6 +1,9 @@
 defmodule ShoppingSite.Router do
   use ShoppingSite.Web, :router
 
+  #gitbook shoppingSite
+
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -24,6 +27,8 @@ defmodule ShoppingSite.Router do
     resources "/products", ProductController, only: [:show, :index] do
       get "/add_to_cart", ProductController, :add_to_cart, as: :add_to_cart
     end
+
+    resources "/carts", CartController, only: [:index]
   end
 
   scope "/admin", ShoppingSite.Admin, as: :admin do

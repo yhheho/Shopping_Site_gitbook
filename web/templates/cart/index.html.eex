@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2>Cart</h2>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th colspan="2">Product information</th>
+          <th>price</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <%= for product <- @products do %>
+          <tr>
+            <td>
+              <%= link to: product_path(@conn, :show, product.id) do %>
+                photo
+              <% end %>
+            </td>
+            <td>
+              <%= link to: product_path(@conn, :show, product.id) do %>
+                <%= product.title %>
+              <% end %>
+            </td>
+            <td>
+              <%= product.price %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <br>
+
+    <div class="total clearfix">
+      <span class="pull-right">
+        <span> total <%= cart_total_price(@conn) %> </span>
+      </span>
+    </div>
+
+  </div>
+</div>
