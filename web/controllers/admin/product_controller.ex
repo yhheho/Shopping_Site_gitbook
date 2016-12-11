@@ -2,6 +2,7 @@ defmodule ShoppingSite.Admin.ProductController do
   use ShoppingSite.Web, :controller
 
   alias ShoppingSite.Product
+  alias ShoppingSite.PhotoUploader
 
   import ShoppingSite.UserController, only: [authenticate: 2]
   plug :authenticate
@@ -48,5 +49,20 @@ defmodule ShoppingSite.Admin.ProductController do
         render(conn, "edit.html", product: product, changeset: changeset)
     end
   end
+
+  def delete(conn, %{"id" => id}) do
+    product = Repo.get!(ShoppingSite.Product, id)
+    Repo.delete!(product)
+
+    PhotoUploader.delete(product.photo.file_name) #delete all file contains file_name
+    conn
+      |> redirect(to: admin_product_path(conn, :list_view))
+  end
+
+  def list_view(conn, _params) do
+    products = Repo.all(Product)
+    render conn, "list_view.html", products: products
+  end
+
 
 end

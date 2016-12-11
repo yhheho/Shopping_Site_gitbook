@@ -36,6 +36,8 @@ defmodule ShoppingSite.Router do
 
     resources "/products", ProductController
     resources "/users",   UserController
+    get "/change_authority/:id", UserController, :change_authority
+    get "/product_list_view", ProductController, :list_view
   end
 
   # Other scopes may use custom stacks.

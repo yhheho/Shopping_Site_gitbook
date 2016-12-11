@@ -2,6 +2,8 @@
 
 <h1>Products</h1>
 
+<%= link "List View", to: admin_product_path(@conn, :list_view), class: "btn btn-md btn-default" %>
+
 <ul>
   <%= for product <- @products do %>
     <div class="col-xs-6 col-md-3">

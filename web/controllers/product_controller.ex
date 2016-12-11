@@ -20,6 +20,7 @@ defmodule ShoppingSite.ProductController do
     cart_item_changeset =
       build_assoc(current_cart(conn), :cart_items)
         |> CartItem.changeset(%{"cart_id" => current_cart(conn).id, "product_id" => product.id})
+
     case Repo.insert(cart_item_changeset) do
       {:ok, _cart_item} ->
         conn
