@@ -1,5 +1,6 @@
 defmodule ShoppingSite.Auth do
   import Plug.Conn
+  import Phoenix.Controller
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 
   def init(opts) do
@@ -38,5 +39,15 @@ defmodule ShoppingSite.Auth do
     end
   end
 
+  def admin_required(conn, _params) do
+    if conn.assigns.current_user.admin do
+      conn
+    else
+      conn
+        |> put_flash(:error, "You don't have this permission")
+        |> redirect(to: ShoppingSite.Router.Helpers.page_path(conn, :index))
+        |> halt
+    end
+  end
 
 end

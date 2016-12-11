@@ -7,4 +7,8 @@ defmodule ShoppingSite.LayoutView do
     ShoppingSite.Repo.preload(current_cart(conn), :cart_items).cart_items
       |> length
   end
+
+  def is_admin(user) do
+    user.admin
+  end
 end

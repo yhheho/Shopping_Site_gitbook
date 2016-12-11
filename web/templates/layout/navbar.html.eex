@@ -29,6 +29,9 @@
             </a>
             <ul class="dropdown-menu">
               <li><%= link "Log out", to: session_path(@conn, :delete, @conn.assigns.current_user), method: :delete %></li>
+              <%= if is_admin(@conn.assigns.current_user) do %>
+                <li><%= link "Product Management", to: admin_product_path(@conn, :index) %></li>
+              <% end %>
             </ul>
           </li>
         <% end %>
