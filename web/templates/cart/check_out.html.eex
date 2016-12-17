@@ -1,23 +1,16 @@
 <div class="row">
   <div class="col-md-12">
-    <h2>Cart</h2>
 
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th colspan="2">Product information</th>
+          <th width="80%">product information</th>
           <th>price</th>
         </tr>
       </thead>
-
       <tbody>
-        <%= for product <- @products do %>
+        <%= for product <- get_cart_items(@conn) do %>
           <tr>
-            <td>
-              <%= link to: product_path(@conn, :show, product.id) do %>
-                photo
-              <% end %>
-            </td>
             <td>
               <%= link to: product_path(@conn, :show, product.id) do %>
                 <%= product.title %>
@@ -31,21 +24,16 @@
       </tbody>
     </table>
 
-    <br>
-
     <div class="total clearfix">
       <span class="pull-right">
-        <span> total <%= cart_total_price(@conn) %> </span>
+        total <%= cart_total_price(@conn) %>
       </span>
     </div>
 
-    <div class="checkout clearfix">
-      <span class="pull-right">
-        <%= link "Check out",
-            to: cart_check_out_path(@conn, :check_out, current_cart(@conn).id,
-            class: "btn btn-lg btn-danger") %>
-      </span>
+    <h2>Order information</h2>
+    <div class="order-form">
+      <%= render "order_form.html", changeset: @order_changeset,
+          action: order_path(@conn, :create) %>
     </div>
-
   </div>
 </div>
