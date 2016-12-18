@@ -3,7 +3,7 @@ defmodule ShoppingSite.OrderInfo do
 
   schema "order_infos" do
     field :billing_name, :string
-    field :bolling_address, :string
+    field :billing_address, :string
     field :shipping_name, :string
     field :shipping_address, :string
     belongs_to :order, ShoppingSite.Order
@@ -16,7 +16,7 @@ defmodule ShoppingSite.OrderInfo do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:billing_name, :bolling_address, :shipping_name, :shipping_address])
-    |> validate_required([:billing_name, :bolling_address, :shipping_name, :shipping_address])
+    |> cast(params, [:billing_name, :billing_address, :shipping_name, :shipping_address])
+    |> validate_required([:billing_name, :billing_address, :shipping_name, :shipping_address])
   end
 end

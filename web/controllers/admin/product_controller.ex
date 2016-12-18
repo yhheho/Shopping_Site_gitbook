@@ -12,7 +12,7 @@ defmodule ShoppingSite.Admin.ProductController do
     render conn, "index.html", products: products
   end
 
-  def new(conn, params) do
+  def new(conn, _params) do
     changeset = Product.changeset(%Product{})
     render conn, "new.html", changeset: changeset
   end
@@ -32,7 +32,7 @@ defmodule ShoppingSite.Admin.ProductController do
 
   def edit(conn, %{"id" => id}) do
     product = Repo.get!(Product, id)
-    changeset = Product.changset(product)
+    changeset = Product.changeset(product)
     render conn, "edit.html", product: product, changeset: changeset
   end
 

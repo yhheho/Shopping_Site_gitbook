@@ -9,7 +9,6 @@ defmodule ShoppingSite.CartController do
   end
 
   def index(conn, _params) do
-    cart_id = get_session(conn, :cart_id)
     current_cart = current_cart(conn)
 
     products = Repo.preload(current_cart, :products).products

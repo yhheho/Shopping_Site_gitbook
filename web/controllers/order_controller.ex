@@ -1,6 +1,7 @@
 defmodule ShoppingSite.OrderController do
   use ShoppingSite.Web, :controller
 
+  require Logger
   alias ShoppingSite.Order
   alias ShoppingSite.OrderItem
   alias ShoppingSite.Repo
@@ -11,6 +12,8 @@ defmodule ShoppingSite.OrderController do
 
   def create(conn, %{"order" => order_params}) do
 
+    IO.inspect order_params
+
     new_order_params =
       order_params
         |> Map.put("user_id", Integer.to_string(conn.assigns.current_user.id))
@@ -18,6 +21,10 @@ defmodule ShoppingSite.OrderController do
 
     order_changeset =
       Order.changeset(%Order{}, new_order_params)
+
+    Logger.debug "order_changeset"
+    IO.inspect order_changeset
+
 
     if order_changeset.valid? do
       case Repo.insert(order_changeset) do
@@ -51,7 +58,7 @@ defmodule ShoppingSite.OrderController do
         |> Repo.preload(:product)
         |> Enum.map(& &1.product)
         #|> Enum.map(fn x -> %{product: x.product, quantity: x.quantity} end)
-
+    IO.puts "after gettingggggg products"
     ##quantity
 
     for item <- products do
@@ -63,6 +70,7 @@ defmodule ShoppingSite.OrderController do
           |> OrderItem.changeset(%{"product_name" => item.title,
                                    "price" => item.price,
                                    "quantity" => 1})
+          IO.puts "after creatingggggg ordetitem"
       case Repo.insert(order_item_changeset) do
         {:ok, _order_item} ->
           conn

@@ -36,8 +36,10 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :shopping_site, ShoppingSite.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: System.get_env("REPO_USERNAME"),
-  password: System.get_env("REPO_PASSWORD"),
+  # username: System.get_env("REPO_USERNAME"),
+  # password: System.get_env("REPO_PASSWORD"),
+  username: "six303",
+  password: "emillio303s511600x",
   database: "shopping_site_dev",
   hostname: "localhost",
   pool_size: 10
