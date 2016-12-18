@@ -49,14 +49,20 @@ defmodule ShoppingSite.OrderController do
     products =
       Repo.preload(current_cart(conn), :cart_items).cart_items
         |> Repo.preload(:product)
-        |> Enum.map(fn x -> %{product: x.product, quantity: x.quantity} end)
+        |> Enum.map(& &1.product)
+        #|> Enum.map(fn x -> %{product: x.product, quantity: x.quantity} end)
+
+    ##quantity
 
     for item <- products do
       order_item_changeset =
         build_assoc(order, :items)
-          |> OrderItem.changeset(%{"product_name" => item[:product].title,
-                                   "price" => item[:product].price,
-                                   "quantity" => item[:quantity]})
+          # |> OrderItem.changeset(%{"product_name" => item[:product].title,
+          #                          "price" => item[:product].price,
+          #                          "quantity" => 1})
+          |> OrderItem.changeset(%{"product_name" => item.title,
+                                   "price" => item.price,
+                                   "quantity" => 1})
       case Repo.insert(order_item_changeset) do
         {:ok, _order_item} ->
           conn
