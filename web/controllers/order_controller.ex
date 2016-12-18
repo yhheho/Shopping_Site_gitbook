@@ -10,9 +10,8 @@ defmodule ShoppingSite.OrderController do
   import ShoppingSite.CartController, only: [current_cart: 1]
   plug :authenticate when action in [:create]
 
-  def create(conn, %{"order" => order_params}) do
 
-    IO.inspect order_params
+  def create(conn, %{"order" => order_params}) do
 
     new_order_params =
       order_params
@@ -21,10 +20,6 @@ defmodule ShoppingSite.OrderController do
 
     order_changeset =
       Order.changeset(%Order{}, new_order_params)
-
-    Logger.debug "order_changeset"
-    IO.inspect order_changeset
-
 
     if order_changeset.valid? do
       case Repo.insert(order_changeset) do
@@ -44,6 +39,17 @@ defmodule ShoppingSite.OrderController do
     end
   end
 
+  def show(conn, %{"token" => token}) do
+    order = Repo.get_by(Order, token: token)
+    order_info = Repo.preload(order, :info).info
+    order_items = Repo.preload(order, :items).items
+    render(conn, "show.html",
+           order: order,
+           order_info: order_info,
+           order_items: order_items)
+  end
+
+
   def get_total_price(conn) do
     Repo.preload(current_cart(conn), :cart_items).cart_items
       |> Repo.preload(:product)
@@ -58,7 +64,7 @@ defmodule ShoppingSite.OrderController do
         |> Repo.preload(:product)
         |> Enum.map(& &1.product)
         #|> Enum.map(fn x -> %{product: x.product, quantity: x.quantity} end)
-    IO.puts "after gettingggggg products"
+
     ##quantity
 
     for item <- products do
